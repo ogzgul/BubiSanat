@@ -1,0 +1,92 @@
+﻿@using BubiSanat.Data
+@using Microsoft.EntityFrameworkCore;
+@inject ApplicationDbContext context;
+@{
+    List<TopCategory> topCategories = context.TopCategories.Include(t=>t.Categories).ToList();
+    List<Category> categories = context.Categories.Where(c => c.TopCategoryId == null).ToList();
+}
+@{
+	Layout=null;
+}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BubiSanat</title>
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BubiSanat.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img height="35px"; src="https://bubisanat.s3.eu-central-1.amazonaws.com/bubisanat_logo.png"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <main class="header-offset">
+      <div class="aboutus container d-flex flex-column justify-content-center align-items-center py-3">
+  <h1 class="header">BuBi’ Sanat nedir? </h1>
+
+  <h3 class="font-weight-bold">BuBi’ Sanat, düşünen ve üreten herkes için bir soluklanma alanıdır.</h3>
+  <span class="paragraph">İmkanı olanın değil yeteneği olanın sivrileceği, işleyiş refleksinin -koşullar elverdiğince- nitelik önceliği üzerine kurulduğu bağımsız bir fikir-sanat platformudur.</span>
+
+  <h1 class="header">YAYIN POLİTİKASI</h1>
+  <h2 class="paragraph">Öncelikle BuBi' Sanat için emek ve zaman harcayan tüm bireylerin (editör, yazılımcı vb.) yaptığı işi tamamiyle gönüllü olarak yaptığını bilmenizi ve geri dönüşlerinizi koşulları da işin içine dahil ederek belirlemenizi rica ederiz. Biz bir firma ya da kurum değiliz. Kişisel yaşamından zaman artırarak bu işi sürdürmeye çalışan bir avuç sıradan insanız. Bilginize...</h2>
+
+  <ol>
+    <li>Onay süreci nasıl işler?</li>
+    <ul>
+      <li>Sitemize gönderilen tüm içerikler editöryal sürece tâbidir.</li>
+      <li>Göndermiş olduğunuz tüm içerikler, editörlerimiz tarafından kronolojik sıraya göre değerlendirilir ve ortalama değerlendirme süresi üç (3) gündür.</li>
+      <li>İçerikler TDK kurallarına göre gerekli görüldüğü durumlarda revize edilir ve yayına uygun hale getirilir.</li>
+      <li>İçeriğinizde kasıtlı olarak yazım yanlışı içeren bir kelime/biçim oyunu vb. yaptıysanız "bunu kasıtlı olarak yaptığınızı" içeriğin bir kısmında belirtmeniz gerekmektedir.  Aksi durumdaki tüm içerikler yayın politikamıza ve TDK kurallarına uygun revize edilir.</li>
+    </ul>
+    <li>BuBi Sanat'ta nasıl içerikler yayınlanır?</li>
+    <ul>
+      <li>Yayın politikamıza paralel, ortalama ve üstü nitelikte bulunan tüm içerikler yayınlanır.</li>
+      <li>Üretimler ele alınırken kullanıcının yalnız "şimdisiyle" değil tahmin edilen "beş yıl sonrası" ile de değerlendirilir.</li>
+      <li>Platformumuzda yedi yaşından altmış beş yaşına kadar her bilinçten ve yaştan üretici mevcuttur.</li>
+      <li>Burası sunum alanı olduğu kadar bir gelişim alanıdır. Ve gelişim bilinci her şeyin önünde tutulur.</li>
+      <li>Seyir, iyi olanı daha iyiye, ortalama olanı iyiye yönlendirme şiarıyla ilerlemektedir. </li>
+      <li>BuBi' Sanat bir karar mercii ya da bilirkişi komitesi değildir. BuBi' Sanat, aklıyla sanatın içinde var olmak isteyenlere; üretimlerini başka insanların algı ve yorumlarıyla buluşturmaları için naçizane bir alan inşa etme bilincindedir.</li>
+      <li>Bu hususta siz kullanıcılarımızın içeriklere yapacağı eleştiri ve yorumlar oldukça önemlidir.</li>
+      <li>BuBi' Sanat, her türlü ırkçı, cinsiyetçi, türcü, aşağılayıcı, hedef gösterici söylemin karşısındadır ve olmaya devam edecektir.</li>
+    </ul>
+    <li>YAZILMA MECBURİYETİ DAYATILMIŞ BİR KÜÇÜK MANİFESTO</li>
+    <ul>
+      <li>BuBi Sanat, yayınladığı her içeriğin "sanat" olduğunu iddia etmez. Bu karanlık ve sıkışık dünyada insanları bir nebze de olsa sanat konuşmaya ve sanatı cümle içinde sık sık kullanmaya teşvik eder. Yaptığı ve yapabileceği en iyi işin bu olacağına kanaat getirmiştir.</li>
+      <li>BuBi' Sanat editörleri yalnızca kendi kişisel beğenilerine göre içerikler yayınlayacak olsaydı, haftada en fazla yirmi içerik yayınlayabilirdi. Yaşadığımız evreni, dünyayı, coğrayfayı ve koşulları göz önünde bulundurmadan üç adımda bir Rilke, Mallarme ya da Edip Cansever beklentisi nafile bir dilektir. </li>
+      <li>BuBi' Sanat bir dergi veya yayınevi değildir. (Olmayacağının garantisi yoktur.)</li>
+      <li>BuBi' Sanat, sizlere mütemadiyen kusursuz ve mükemmel içerikler vadetmez. Masum çabaları, dayanışmayı, sanatın her disiplinini önemseyen bir yaklaşımı ve samimiyeti vadeder.</li>
+      <li>BuBi' Sanat, yola çıktığı andan itibaren yürüyüşünün yalnızlığını ve ne yaparsa yapsın eleştiriden/saldırıdan kurtulamayacağını anlamış insanlardan oluşan bir ekibin algısındadır ve sanatı kurtarmak gibi devasa bir söylemin altına imzasını atmamaktadır.</li>
+      <li>BuBi' Sanat, on kişiye bile yeteneğini, aklını sunma imkanı tanısak; üç tertemiz bilinci düşünsel anlamda kendi mümkün-iyisine sevk edebilsek bize yeter, ilkesiyle yola devam etmektedir.</li>
+      <li>BuBi' Sanat, hiç gereği yokken, yapmasa hiçbir şey kaybetmeyecekken gününün en az on saatini buraya harcayan ve sonucunda hakarete varan eleştirilerle, düşmancıl tavırlarla boğuşan insanlar tarafından yönetilmektedir.</li>
+      <li>BuBi' Sanat sekizinci ayından itibaren salt yıkıcı ve kırıcı eleştirileri(!) muhatap almamaktadır.</li>
+      <li>Eleştirilecek çok şey olduğunun farkında olduğumuzu bilmenizi ve iyileştirmeleri "düşün(e)mediğimizden değil, koşullar el vermediğinden" yapamadığımızı bilmenizi isteriz.</li>
+      <li>Tüm içeriklerden kusursuzluk talebiniz varsa ve kusursuz bir yazar/şair/ressam vb. olduğunuzu düşünüyorsanız muhtemelen doğru yerde değilsiniz ve yanlış düşünüyorsunuz. :)</li>
+    </ul>
+  </ol>
+
+  <span class="paragraph text-left w-100">Sevgilerle...</span>
+  <br>
+  <span class="paragraph text-left w-100">İletişim: <b>info@bubisanat.com</b></span>
+  <span class="paragraph text-left w-100">Tanıtım/Reklam: <b>tanitim@bubisanat.com</b></span>
+
+  <h3 class="paragraph text-left w-100">Platformumuzun sürdürülebilirliği için bizlere destek olmak isterseniz: <a href="https://kreosus.com/bubisanat" target="_blank" rel="noopener noreferrer">kreosus.com/bubisanat</a> </h3>
+  
+  <span class="paragraph text-left w-100">BuBi' Sanat Ekibi</span>
+</div>
+
+    </main>
+</body>
+

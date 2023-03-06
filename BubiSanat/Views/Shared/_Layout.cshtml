@@ -1,0 +1,135 @@
+﻿@using BubiSanat.Data
+@using Microsoft.EntityFrameworkCore;
+@inject ApplicationDbContext context;
+@{
+    List<TopCategory> topCategories = context.TopCategories.Include(t=>t.Categories).ToList();
+    List<Category> categories = context.Categories.Where(c => c.TopCategoryId == null).ToList();
+}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BubiSanat</title>
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BubiSanat.styles.css" asp-append-version="true" />
+    <script>
+           function Card(e)
+           {
+               console.log("tıklandı.");
+               var register = document.getElementById("Register");
+               if (register.style.display != "none") {
+                register.style.display = "none";
+            }else{
+                register.style.display = "none";
+            }
+               e.preventDefault()
+           }
+    </script>
+    <script>
+        function ToggleMenu(id){
+            if($("#"+"List-"+id).css("display")!='none'){
+               $("#"+"List-"+id).toggle();
+            }
+            else{
+                $(".edeb").css("display","none");
+                $("#"+"List-"+id).toggle();
+            }
+            $("*").click(function (event) {
+				if (!$(event.target).is(".alar")) {
+					$(".edeb").css("display", "none");
+				}
+			});
+        }
+
+    </script>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="">
+                    <img height="35px"; src="https://bubisanat.s3.eu-central-1.amazonaws.com/bubisanat_logo.png"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @foreach (TopCategory topCategory in topCategories)
+                        {
+                            <li class="nav-item" >
+                              <a  id="topCat-@topCategory.Id.ToString()" class="topCat nav-link text-dark alar" onclick="ToggleMenu(this.id)"  >@topCategory.Name.Trim()</a>
+
+                               <ul class="edeb" id="List-topCat-@topCategory.Id.ToString()">
+                                @foreach(Category category in topCategory.Categories)
+                                {
+                                    <a class="nav-link text-dark"  asp-controller="Home" asp-action="Index" asp-route-id="@category.Id">@category.Name.Trim()</a>
+                                    
+                                }
+                               </ul>           
+                             </li>
+                        }
+                        @foreach(var item in categories)
+                        {
+                             <li class="nav-item">
+                              <a class="nav-link text-dark" asp-controller="Categories" asp-action="Details" asp-route-id="@item.Id">@item.Name.Trim()</a>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+        <div class="container Box">
+            <div class="row">
+                <div class="col-3" >
+
+                </div>
+                <div class="col-6">
+                    <main role="main" class="">
+                        @RenderBody()
+                    </main>
+                </div>
+                <div  id="Register" class="col-3">
+                    <div class="Card">
+                     <div>
+                        <form>
+                            <div class="form-group">
+                                <i class="fa fa-search"></i>
+                                <input class="form-control" style="opacity:0.50;" placeholder="BubiSanat'ta Ara" type="text"/>
+                                <input type="submit" value="ARA" class="btn" style="background-color:#c9a442; color:#fff;" data-disable-with="Ara"/>
+                    </div>
+                        </form>
+                    </div>
+                    <hr />
+                    <div class="card-footer">
+                        <nav>
+                            <ul class="card-footer-ul">
+                                <li>
+                                    <a asp-controller="Home" asp-action="About">Hakkımızda</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Help">Yardım</a>
+                                </li>
+                                 <li>
+                                    <a asp-controller="Home" asp-action="UserAgreement">Kullanıcı Sözleşmesi</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+            </div>                  
+        </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

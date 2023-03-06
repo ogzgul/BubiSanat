@@ -1,0 +1,87 @@
+﻿@model BubiSanat.Models.Post
+
+@{
+	ViewData["Title"] = "Create";
+}
+<script>
+	//function selectPThis(obj)
+
+	function kontrol(id) {
+
+		var x = document.getElementById("previd").value;
+		var y = document.getElementById("nextid").value;
+		if (x == y) {
+			
+			if (id == "previd") {
+				document.getElementById("previd").value = "";
+			}
+			else {
+				document.getElementById("nextid").value = "";
+			}
+		}
+	}
+</script>
+
+<h1>Create</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+	<div class="col">
+		<form asp-action="Create" enctype = "multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input asp-for="AuthorId" type="hidden" value="@ViewData["authorId"]" />
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CategoryId" class="control-label"></label>
+				<select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="PreviousPostId" class="control-label"></label>
+				<select asp-for="PreviousPostId" id="previd" class ="form-control" asp-items="ViewBag.PreviousPostId" onchange="kontrol(id)">
+					<option value=""></option>
+				</select>
+				
+			</div>
+			<div class="form-group">
+				<label asp-for="NextPostId" class="control-label"></label>
+				<select asp-for="NextPostId" id="nextid" class="form-control" asp-items="ViewBag.NextPostId" onchange="kontrol(id)">
+					<option value=""></option>
+				</select>
+				
+			</div>
+			<div class="form-group">
+				<label asp-for="Tags" class="control-label"></label>
+				<input asp-for="Tags" class="form-control" />
+				<span asp-validation-for="Tags" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Content" class="control-label"></label>
+				<input asp-for="Content" class="form-control" />
+				<span asp-validation-for="Content" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="FormImage" class="control-label"></label>
+				<input asp-for="FormImage"  class="form-control" />
+				<span asp-validation-for="FormImage"  class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

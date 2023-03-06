@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "";
+}
+
+<h1 style="margin-top:10px;">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div>
+        <form id="registerForm" asp-action="Login" method="post" style="padding:10px;">
+            <h2>Giriş Yap</h2>
+            <hr />
+            <div class="form-floating" style="margin-bottom:10px;">
+                <input name="userName" class="form-control" />
+                <label for="userName">Kullanıcı adı veya e-posta</label>
+            </div>
+            <div class="form-floating" style="margin-bottom:10px;">
+                <input name="password" type="password" class="form-control" />
+                <label for="password">Şifre</label>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary" >Login</button>
+        </form>
+    </div>
+</div>

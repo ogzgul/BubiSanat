@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BubiSanat.Models.Post>
+
+@{
+    ViewData["Title"] = "BubiSanat";
+    string timeSpan;
+    string content;
+
+}
+<script>
+    	function Like(postid) {
+			$.get("@Url.Action("Likes","Posts")?id=" + postid, function (likep) {
+				$("#Likecount-"+postid).html(likep);
+			});
+	}
+</script>
+
+@foreach (var item in Model)
+{
+    if (item.Content.Length < 300)
+    {
+        content = item.Content;
+    }
+    else
+    {
+        content = item.Content.Substring(0, 300) + "...";
+    }
+    TimeSpan span = (DateTime.Now - item.CreatedAt);
+    if (span.Days < 1)
+    {
+        timeSpan = span.Hours.ToString()+" saat";
+    }
+    else
+    {
+        timeSpan = span.Days.ToString()+" gün";
+    }
+    <div class="cardd card-nav-tabs">
+        <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="carda"></a>
+        <div class="Post">
+    <ul>
+        <li>
+                <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                <div>
+                    <p>@timeSpan Önce</p>
+                </div>
+        </li>
+        <li>
+            <strong>Yazar:</strong>
+            <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id">@item.Author.UserName</a>
+            <strong>Kategrori:
+            <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.Category.Id">@Html.DisplayFor(modelItem => item.Category.Name)</a>
+            </strong>
+        </li>
+    </ul>
+</div>  
+<div class="Post-body">
+    <div class="tab-content">
+        <p>@content</p>
+    </div>
+    <div class="tab-content">
+                @if (item.Image != null)
+                {
+                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(@item.Image)"/>    
+                }
+    </div>
+</div>
+<div class="Post-footer">
+    <div class="Post-footer-action" >
+            <i id="Clicklike" class="fa fa-heart" onclick="Like('@item.Id.ToString()')"></i>
+        <span id="Likecount-@item.Id.ToString()">@item.Likes</span>
+    </div>
+        <div class="Post-footer-action">
+<i class="fa fa-comment"></i>
+<span>1</span>
+    </div>
+        <div class="Post-footer-action">
+        <i class="fa fa-eye"></i>
+        <span>@item.DisplayCount.ToString()</span>
+    </div>
+</div>
+    </div>
+}
